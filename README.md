@@ -1,2 +1,3 @@
 # Teste técnico
 
+Vite + React
