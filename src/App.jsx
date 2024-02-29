@@ -1,8 +1,12 @@
-import {} from "react";
+import { useState } from "react";
+import SearchBar from "./components/SearchBar";
+
 
 function App() {
+
   return (
     <>
+      <SearchBar />
     </>
   );
 }
