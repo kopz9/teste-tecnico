@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
+export default SearchBar;
 
 function SearchBar() {
   const [artist, setArtist] = useState("");
@@ -14,27 +16,19 @@ function SearchBar() {
     setSearched(true);
     setArtist("");
     getArtist(artist);
-  }
-
-  const options = {
-    method: "GET",
-    headers: {
-      "X-RapidAPI-Key": "c57ec4b048mshf8d88185a6b44dep132c3cjsn23499f236a2c",
-      "X-RapidAPI-Host": "spotify23.p.rapidapi.com",
-    },
-  };
+  }  
 
   async function getArtist(artist) {
     try {
-      let url = `https://spotify23.p.rapidapi.com/search/?q=${artist}&type=artists&offset=0&limit=10&numberOfTopResults=5`;
-      let data = await fetch(url, options);
+      let url = `http://localhost:3001/api/search?artist=${artist}`;
+      let data = await fetch(url);
       let res = await data.json();
       setArtists(res.artists.items);
       console.log(res.artists.items);
-    } catch (error) {
-      console.log(error);
-    }
+    } catch(error){
+    console.log(error);
   }
+}
 
   return (
     <>
@@ -65,7 +59,7 @@ function SearchBar() {
                     <img
                       src={artist.data.visuals.avatarImage.sources[0].url}
                       alt=""
-                      className="w-full h-32 object-cover mb-2 rounded"
+                      className="w-full h-82 object-cover mb-2 rounded"
                     />
                   )}
                 {artist.data.profile && artist.data.profile.name && (
@@ -73,9 +67,15 @@ function SearchBar() {
                     {artist.data.profile.name}
                   </h2>
                 )}
-                <a href="#" className="text-blue-500 hover:underline">
+                <Link
+                  to="/form"
+                  className="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                  onClick={() => {
+                    localStorage.setItem("selectedArtist", JSON.stringify(artist.data.profile));
+                  }}
+                >
                   Contratar
-                </a>
+                </Link>
               </div>
             ))}
           </div>
@@ -84,5 +84,3 @@ function SearchBar() {
     </>
   );
 }
-
-export default SearchBar;
