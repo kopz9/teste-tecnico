@@ -69,7 +69,6 @@ export const Form = () => {
   return (
    
 <div className="max-w-lg mx-auto p-6 bg-white rounded shadow">
-
   {selectedArtist && (
     <div className="mb-6">
       <h2 className="text-xl font-bold">Artista Selecionado</h2>
