@@ -30,7 +30,7 @@ export const Form = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault(); 
-    
+
     // Verificar se algum campo está vazio
     if (
       formData.contratante.trim() === "" ||
@@ -91,8 +91,7 @@ export const Form = () => {
             type="text"
             name="cache"
             value={formData.cache}
-            onChange={handleChange}
-            required
+            onChange={handleChange}            
           />
         </label>
         <label>
@@ -111,8 +110,7 @@ export const Form = () => {
             type="text"
             name="enderecoEvento"
             value={formData.enderecoEvento}
-            onChange={handleChange}
-            required
+            onChange={handleChange}            
           />
         </label>
         <button type="submit">Enviar</button>
