@@ -1,8 +1,9 @@
-import { useState } from "react";
 import SearchBar from "./components/SearchBar";
 import {createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { Form } from "./components/Form";
 import { NotFoundPage } from "./components/NotFoundPage";
+import { HiredArtists } from "./components/HiredArtists";
+import { NavBar } from "./components/NavBar";
 
 const router = createBrowserRouter([{
   path: '/',
@@ -12,6 +13,10 @@ const router = createBrowserRouter([{
 {
   path: '/form',
   element: <Form /> 
+},
+{
+  path: '/hiredArtists',
+  element: <HiredArtists />
 }
 ]);
 
@@ -20,6 +25,7 @@ function App() {
 
   return (
     <>
+      <NavBar />
       <RouterProvider router={router} />
     </>
   );
