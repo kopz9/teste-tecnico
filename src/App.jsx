@@ -1,32 +1,31 @@
 import SearchBar from "./components/SearchBar";
-import {createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Form } from "./components/Form";
 import { NotFoundPage } from "./components/NotFoundPage";
 import { HiredArtists } from "./components/HiredArtists";
-import { NavBar } from "./components/NavBar";
+import { NavigationBar } from "./components/NavBar";
 
-const router = createBrowserRouter([{
-  path: '/',
-  element: <SearchBar />,
-  errorElement: <NotFoundPage />
-},
-{
-  path: '/form',
-  element: <Form /> 
-},
-{
-  path: '/hiredArtists',
-  element: <HiredArtists />
-}
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <SearchBar />,
+    errorElement: <NotFoundPage />,
+  },
+  {
+    path: "/form",
+    element: <Form />,
+  },
+  {
+    path: "/hiredArtists",
+    element: <HiredArtists />,
+  },
 ]);
 
-
 function App() {
-
   return (
-    <>
-      <NavBar />
-      <RouterProvider router={router} />
+    <>        
+        <RouterProvider router={router} />
+        
     </>
   );
 }
