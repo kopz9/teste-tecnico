@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { NavigationBar } from "./NavBar";
 
 export const Form = () => {
   const selectedArtist = JSON.parse(localStorage.getItem("selectedArtist"));
@@ -31,7 +32,7 @@ export const Form = () => {
   const handleSubmit = (e) => {
     e.preventDefault(); 
 
-    // Verificar se algum campo está vazio
+    // Check if there is a input field empty
     if (
       formData.contratante.trim() === "" ||
       formData.cache.trim() === "" ||
@@ -42,7 +43,7 @@ export const Form = () => {
       return;
     }
 
-    // Verificar se a data já foi selecionada
+    // Check if the current date is already picked
     if (formDataList.some((item) => item.dataEvento === formData.dataEvento)) {
       alert("Artista já contratado nesta data");
       return;
@@ -55,79 +56,95 @@ export const Form = () => {
       enderecoEvento: formData.enderecoEvento,
     };
     setFormDataList([...formDataList, newFormData]);
-    // Limpar os campos após o envio
+    // Clean inputs after submit
     setFormData({
       contratante: "",
       cache: "",
       dataEvento: "",
       enderecoEvento: "",
     });
-    setShowSuccessMessage(true); // Exibir mensagem de sucesso
+    setShowSuccessMessage(true); // Show success message
   };
 
   return (
-    <div>
-      {selectedArtist && (
-        <div>
-          <h2>Artista Selecionado</h2>
-          <p>{selectedArtist.name}</p>
-          <p>{selectedArtist.id}</p>
-        </div>
-      )}
-      <form onSubmit={handleSubmit}>
-        <label>
-          Nome do Contratante:
-          <input
-            type="text"
-            name="contratante"
-            value={formData.contratante}
-            onChange={handleChange}
-            required
-          />
-        </label>
-        <label>
-          Cache:
-          <input
-            type="text"
-            name="cache"
-            value={formData.cache}
-            onChange={handleChange}            
-          />
-        </label>
-        <label>
-          Data do Evento:
-          <input
-            type="date"
-            name="dataEvento"
-            value={formData.dataEvento}
-            onChange={handleChange}
-            required
-          />
-        </label>
-        <label>
-          Endereço do Evento:
-          <input
-            type="text"
-            name="enderecoEvento"
-            value={formData.enderecoEvento}
-            onChange={handleChange}            
-          />
-        </label>
-        <button type="submit">Enviar</button>
-      </form>
-      {showSuccessMessage && <p>Formulário enviado com sucesso!</p>}
-      <Link
-        className='inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"'
-        to="/"
-      >
-        continuar contratando
-      </Link>
-      <Link
-        className='inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"'
-        to="/hiredArtists"
-      >
-        ver artistas contratados
-      </Link>
+   
+<div className="max-w-lg mx-auto p-6 bg-white rounded shadow">
+
+  {selectedArtist && (
+    <div className="mb-6">
+      <h2 className="text-xl font-bold">Artista Selecionado</h2>
+      <p>{selectedArtist.name}</p>
+      <p>{selectedArtist.id}</p>
     </div>
+  )}
+  <form onSubmit={handleSubmit}>
+    <label className="block mb-4">
+      <span className="text-gray-700">Nome do Contratante:</span>
+      <input
+        className="form-input mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+        type="text"
+        name="contratante"
+        value={formData.contratante}
+        onChange={handleChange}
+        required
+      />
+    </label>
+    <label className="block mb-4">
+      <span className="text-gray-700">Cache:</span>
+      <input
+        className="form-input mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+        type="text"
+        name="cache"
+        value={formData.cache}
+        onChange={handleChange}
+      />
+    </label>
+    <label className="block mb-4">
+      <span className="text-gray-700">Data do Evento:</span>
+      <input
+        className="form-input mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+        type="date"
+        name="dataEvento"
+        value={formData.dataEvento}
+        onChange={handleChange}
+        required
+      />
+    </label>
+    <label className="block mb-4">
+      <span className="text-gray-700">Endereço do Evento:</span>
+      <input
+        className="form-input mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+        type="text"
+        name="enderecoEvento"
+        value={formData.enderecoEvento}
+        onChange={handleChange}
+      />
+    </label>
+    <button
+      type="submit"
+      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+    >
+      Enviar
+    </button>
+  </form>
+  {showSuccessMessage && (
+    <p className="mt-4 text-green-600">Formulário enviado com sucesso!</p>
+  )}
+  <div className="mt-6">
+    <Link
+      className="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-4"
+      to="/"
+    >
+      Continuar Contratando
+    </Link>
+    <Link
+      className="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+      to="/hiredArtists"
+    >
+      Ver Artistas Contratados
+    </Link>
+
+  </div>
+</div>
   );
 };
