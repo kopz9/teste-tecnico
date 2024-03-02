@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { NavigationBar } from "./NavBar";
+import toast, { Toaster } from "react-hot-toast";
+
 
 function SearchBar() {
   const [artist, setArtist] = useState("");
@@ -10,17 +12,12 @@ function SearchBar() {
   const [hiredArtists, setHiredArtists] = useState([]);
   const [selectedDate, setSelectedDate] = useState("");
 
+  
+
   function handleSearch(e) {
     e.preventDefault();
     if (artist.trim() === "") {
-      alert("Campo não pode ser vazio");
-
-      return;
-    }
-
-    // Check if the date was already used
-    if (hiredArtists.some((hiredArtist) => hiredArtist.data === selectedDate)) {
-      alert("data selecionada");
+      toast.error("Campo não pode ser vazio");
       return;
     }
 
@@ -41,7 +38,8 @@ function SearchBar() {
   }
 
   return (
-    <>
+    <>   
+      <Toaster />
       <NavigationBar />
       <div className="flex flex-col justify-center items-center w-full">
         <div className="flex flex-col items-center">
