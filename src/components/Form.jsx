@@ -12,6 +12,7 @@ export const Form = () => {
     cache: "",
     dataEvento: "",
     enderecoEvento: "",
+    artista: ""
   });
 
   const [formDataList, setFormDataList] = useState(() => {
@@ -57,6 +58,8 @@ export const Form = () => {
       cache: formData.cache,
       dataEvento: formData.dataEvento,
       enderecoEvento: formData.enderecoEvento,
+      artista: selectedArtist,  
+      photoUrl: selectedArtist.photoUrl  
     };
     setFormDataList([...formDataList, newFormData]);
     // Clean inputs after submit
@@ -78,7 +81,7 @@ export const Form = () => {
           <div className="mb-6">
             <h2 className="text-xl font-bold">Artista Selecionado</h2>
             <p>{selectedArtist.name}</p>
-            <p>{selectedArtist.id}</p>
+            <p>{selectedArtist.id}</p>            
           </div>
         )}
         <form onSubmit={handleSubmit}>
