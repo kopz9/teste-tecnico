@@ -43,28 +43,31 @@ function SearchBar() {
   return (
     <>
       <NavigationBar />
-      <div className="flex flex-col justify-center items-center ">
-        <h2 className="font-medium font-mono text-white text-3xl mt-7 mb-3">
-          StarSeeker
-        </h2>
-        <div className="flex items-center">
-          <Input
-            className="border-2 h-8 px-2 pr-16 rounded-lg text-sm text-white focus:outline-none"
-            type="text"
-            value={artist}
-            onChange={(e) => setArtist(e.target.value)}
-          />
-          <form onSubmit={handleSearch} className="ml-2">
-            <Button
-              className="bg-white hover:bg-slate-400 text-black font-bold py-2 px-4 rounded"
-              type="submit"
-            >
-              Buscar
-            </Button>
-          </form>
+      <div className="flex flex-col justify-center items-center w-full">
+        <div className="flex flex-col items-center">
+          <h2 className="font-medium font-mono text-white text-3xl mt-7 mb-3">
+            StarSeeker
+          </h2>
+          <div className="flex items-center">
+            <Input
+              className="w-[400px] p-[20px] rounded border-2 text-white focus:outline-none"
+              type="text"
+              placeholder="Buscar artista"
+              value={artist}
+              onChange={(e) => setArtist(e.target.value)}
+            />
+            <form onSubmit={handleSearch} className="ml-2">
+              <Button
+                className="bg-white hover:bg-slate-400 text-black font-bold py-[22px] px-[40px] rounded"
+                type="submit"
+              >
+                Buscar
+              </Button>
+            </form>
+          </div>
         </div>
         {artists.length === 0 ? (
-          <p className="text-white mt-8">
+          <p className="text-white text-2xl mt-8">
             Digite o nome de um artista na barra de busca!
           </p>
         ) : (
@@ -72,7 +75,7 @@ function SearchBar() {
             {artists.map((artist, index) => (
               <div
                 key={index}
-                className="transition-transform duration-300 hover:translate-y-[-5px] bg-white p-6 rounded shadow flex flex-col"
+                className="transition-transform duration-300 hover:translate-y-[-5px] bg-zinc-950 p-6 rounded shadow flex flex-col"
               >
                 {artist.data.visuals &&
                   artist.data.visuals.avatarImage &&
@@ -80,13 +83,13 @@ function SearchBar() {
                     <img
                       src={artist.data.visuals.avatarImage.sources[0].url}
                       alt="artist image"
-                      className="w-full h-48 object-cover mb-2 rounded scale-110 mb-5"
+                      className="w-full h-48 object-cover rounded scale-110 mb-5"
                       loading="lazy"
                       style={{ objectFit: "cover" }}
                     />
                   )}
                 {artist.data.profile && artist.data.profile.name && (
-                  <h2 className="text-lg font-semibold">
+                  <h2 className="text-lg font-semibold text-white mb-5">
                     {artist.data.profile.name}
                   </h2>
                 )}
