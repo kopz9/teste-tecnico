@@ -1,45 +1,60 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { NavigationBar } from "./NavBar";
+import { format } from "date-fns";
+import { Button } from "./ui/button";
 
 export const HiredArtists = () => {
   const formDataList = JSON.parse(localStorage.getItem("formDataList")) || [];
-  const selectedArtist =
-    JSON.parse(localStorage.getItem("selectedArtist")) || [];
+  const selectedArtist = JSON.parse(localStorage.getItem("selectedArtist")) || [];
+
+  const handleClearLocalStorage = (index) => {
+    const updatedFormDataList = [...formDataList];
+    updatedFormDataList.splice(index, 1);
+    localStorage.setItem("formDataList", JSON.stringify(updatedFormDataList));
+    window.location.reload(); 
+  };
+  
   return (
     <>
-    <NavigationBar />
-    <div className="max-w-lg mx-auto p-6 mt-12 bg-white rounded shadow">
-      <h2 className="text-black">Artistas Contratados</h2>
-      {formDataList.map((formData, index) => (
-        <div key={index} className="mt-10">
-          <div>
-          <p>
-            <strong>Contratante:</strong> {formData.contratante}
-          </p>
-          <p>
-            <strong>Cache:</strong> {formData.cache}
-          </p>
-          <p>
-            <strong>Data do Evento:</strong> {formData.dataEvento}
-          </p>
-          <p>
-            <strong>Endereço do Evento:</strong> {formData.enderecoEvento}
-          </p>
-          <p>
-            <strong>Artista:</strong>{" "}
-            {selectedArtist ? selectedArtist.name : ""}
-          </p>
-          </div>
-          <Link
-            className="inline-block bg-neutral-800 hover:bg-neutral-500 text-white font-bold py-2 px-4 rounded"
-            to="/"
+      <NavigationBar />
+      <h2 className="text-white text-center font-mono text-3xl">
+        Artistas Contratados
+      </h2>
+      <div className="m-[50px] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-8">
+        {formDataList.map((formData, index) => (
+          <div
+            key={index}
+            className="bg-neutral-400 p-[40px] rounded-lg shadow-md"
           >
-            Continuar contratando
-          </Link>
-        </div>
-      ))}
-    </div>
+            <p>
+              <strong>Contratante:</strong> {formData.contratante}
+            </p>
+            <p>
+              <strong>Cache:</strong> {formData.cache}
+            </p>
+            <p>
+              <strong>Data do Evento:</strong>{" "}
+              {format(new Date(formData.dataEvento), "dd/MM/yyyy")}
+            </p>
+            <p>
+              <strong>Endereço do Evento:</strong> {formData.enderecoEvento}
+            </p>
+            <p>
+              <strong>Artista:</strong>{" "}
+              {selectedArtist ? selectedArtist.name : ""}
+            </p>
+            <div className="mt-4 flex justify-center"> 
+            <Button
+              onClick={() => handleClearLocalStorage(index)}
+              className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-4"
+            >
+              Excluir
+            </Button>
+            </div>
+          </div>
+        ))}
+      </div>
     </>
   );
 };
