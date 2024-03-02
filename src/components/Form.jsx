@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { NavigationBar } from "./NavBar";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
+import toast, { Toaster } from "react-hot-toast";
 
 export const Form = () => {
   const selectedArtist = JSON.parse(localStorage.getItem("selectedArtist"));
@@ -41,7 +42,7 @@ export const Form = () => {
       formData.dataEvento.trim() === "" ||
       formData.enderecoEvento.trim() === ""
     ) {
-      alert("Preencha todos os campos");
+      toast.error("Preencha todos os campos");
       return;
     }
 
@@ -70,8 +71,9 @@ export const Form = () => {
 
   return (
     <>
+      <Toaster />
       <NavigationBar />
-      <div className="max-w-lg mx-auto p-6 mt-12 bg-white rounded shadow">
+      <div className="max-w-lg mx-auto p-6 mt-12 border-black bg-neutral-400 rounded shadow">
         {selectedArtist && (
           <div className="mb-6">
             <h2 className="text-xl font-bold">Artista Selecionado</h2>
@@ -83,39 +85,37 @@ export const Form = () => {
           <label className="block mb-4">
             <span className="text-gray-700">Nome do Contratante:</span>
             <Input
-              className="form-input mt-1 block w-full rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              className="form-input mt-1 border-black block w-full rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               type="text"
               name="contratante"
               value={formData.contratante}
-              onChange={handleChange}
-              required
+              onChange={handleChange}              
             />
           </label>
           <label className="block mb-4">
             <span className="text-gray-700">Cache:</span>
             <Input
-              className="form-input mt-1 block w-full  rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              className="form-input mt-1 block w-full  rounded-md shadow-sm border-black focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               type="text"
               name="cache"
               value={formData.cache}
               onChange={handleChange}
             />
           </label>
-          <label className="block mb-4">
-            <span className="text-gray-700">Data do Evento:</span>
+          <label className="block mb-4 " >
+            <span className="text-gray-700 ">Data do Evento:</span>
             <Input
-              className="form-input mt-1 block w-full rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              className="form-input mt-1 block w-full rounded-md shadow-sm border-black focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               type="date"
               name="dataEvento"
               value={formData.dataEvento}
-              onChange={handleChange}
-              required
+              onChange={handleChange}              
             />
           </label>
           <label className="block mb-4">
             <span className="text-gray-700">Endereço do Evento:</span>
             <Input
-              className="form-input mt-1 block w-full rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              className="form-input mt-1 block w-full rounded-md shadow-sm border-black focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               type="text"
               name="enderecoEvento"
               value={formData.enderecoEvento}
@@ -125,14 +125,14 @@ export const Form = () => {
           <div className="flex justify-center">
             <Button
               type="submit"
-              className="hover:bg-neutral-500 text-white font-bold py-2 px-4 rounded"
+              className="bg-neutral-800 hover:bg-neutral-500 text-white font-bold py-2 px-4 rounded"
             >
               Enviar
             </Button>
           </div>
         </form>
         {showSuccessMessage && (
-          <p className="mt-4 text-green-600">Formulário enviado com sucesso!</p>
+          <p className="text-2xl mt-4 text-green-600 text-center">Formulário enviado com sucesso!</p>          
         )}
         <div className="mt-6">
           <Link
