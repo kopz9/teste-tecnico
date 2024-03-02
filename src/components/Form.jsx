@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { NavigationBar } from "./NavBar";
+import { Input } from "./ui/input";
+import { Button } from "./ui/button";
 
 export const Form = () => {
   const selectedArtist = JSON.parse(localStorage.getItem("selectedArtist"));
@@ -30,7 +32,7 @@ export const Form = () => {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
 
     // Check if there is a input field empty
     if (
@@ -67,83 +69,86 @@ export const Form = () => {
   };
 
   return (
-   
-<div className="max-w-lg mx-auto p-6 bg-white rounded shadow">
-  {selectedArtist && (
-    <div className="mb-6">
-      <h2 className="text-xl font-bold">Artista Selecionado</h2>
-      <p>{selectedArtist.name}</p>
-      <p>{selectedArtist.id}</p>
-    </div>
-  )}
-  <form onSubmit={handleSubmit}>
-    <label className="block mb-4">
-      <span className="text-gray-700">Nome do Contratante:</span>
-      <input
-        className="form-input mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-        type="text"
-        name="contratante"
-        value={formData.contratante}
-        onChange={handleChange}
-        required
-      />
-    </label>
-    <label className="block mb-4">
-      <span className="text-gray-700">Cache:</span>
-      <input
-        className="form-input mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-        type="text"
-        name="cache"
-        value={formData.cache}
-        onChange={handleChange}
-      />
-    </label>
-    <label className="block mb-4">
-      <span className="text-gray-700">Data do Evento:</span>
-      <input
-        className="form-input mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-        type="date"
-        name="dataEvento"
-        value={formData.dataEvento}
-        onChange={handleChange}
-        required
-      />
-    </label>
-    <label className="block mb-4">
-      <span className="text-gray-700">Endereço do Evento:</span>
-      <input
-        className="form-input mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-        type="text"
-        name="enderecoEvento"
-        value={formData.enderecoEvento}
-        onChange={handleChange}
-      />
-    </label>
-    <button
-      type="submit"
-      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-    >
-      Enviar
-    </button>
-  </form>
-  {showSuccessMessage && (
-    <p className="mt-4 text-green-600">Formulário enviado com sucesso!</p>
-  )}
-  <div className="mt-6">
-    <Link
-      className="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-4"
-      to="/"
-    >
-      Continuar Contratando
-    </Link>
-    <Link
-      className="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-      to="/hiredArtists"
-    >
-      Ver Artistas Contratados
-    </Link>
-
-  </div>
-</div>
+    <>
+      <NavigationBar />
+      <div className="max-w-lg mx-auto p-6 mt-12 bg-white rounded shadow">
+        {selectedArtist && (
+          <div className="mb-6">
+            <h2 className="text-xl font-bold">Artista Selecionado</h2>
+            <p>{selectedArtist.name}</p>
+            <p>{selectedArtist.id}</p>
+          </div>
+        )}
+        <form onSubmit={handleSubmit}>
+          <label className="block mb-4">
+            <span className="text-gray-700">Nome do Contratante:</span>
+            <Input
+              className="form-input mt-1 block w-full rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              type="text"
+              name="contratante"
+              value={formData.contratante}
+              onChange={handleChange}
+              required
+            />
+          </label>
+          <label className="block mb-4">
+            <span className="text-gray-700">Cache:</span>
+            <Input
+              className="form-input mt-1 block w-full  rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              type="text"
+              name="cache"
+              value={formData.cache}
+              onChange={handleChange}
+            />
+          </label>
+          <label className="block mb-4">
+            <span className="text-gray-700">Data do Evento:</span>
+            <Input
+              className="form-input mt-1 block w-full rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              type="date"
+              name="dataEvento"
+              value={formData.dataEvento}
+              onChange={handleChange}
+              required
+            />
+          </label>
+          <label className="block mb-4">
+            <span className="text-gray-700">Endereço do Evento:</span>
+            <Input
+              className="form-input mt-1 block w-full rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              type="text"
+              name="enderecoEvento"
+              value={formData.enderecoEvento}
+              onChange={handleChange}
+            />
+          </label>
+          <div className="flex justify-center">
+            <Button
+              type="submit"
+              className="hover:bg-neutral-500 text-white font-bold py-2 px-4 rounded"
+            >
+              Enviar
+            </Button>
+          </div>
+        </form>
+        {showSuccessMessage && (
+          <p className="mt-4 text-green-600">Formulário enviado com sucesso!</p>
+        )}
+        <div className="mt-6">
+          <Link
+            className="inline-block bg-neutral-800 hover:bg-neutral-500 text-white font-bold py-2 px-4 rounded mr-4"
+            to="/"
+          >
+            Continuar Contratando
+          </Link>
+          <Link
+            className="inline-block bg-neutral-800 hover:bg-neutral-500 text-white font-bold py-2 px-4 rounded"
+            to="/hiredArtists"
+          >
+            Ver Artistas Contratados
+          </Link>
+        </div>
+      </div>
+    </>
   );
 };

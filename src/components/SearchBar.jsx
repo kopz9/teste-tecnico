@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { Input } from "./ui/input";
+import { Button } from "./ui/button";
+import { NavigationBar } from "./NavBar";
 
 function SearchBar() {
   const [artist, setArtist] = useState("");
@@ -11,12 +14,13 @@ function SearchBar() {
     e.preventDefault();
     if (artist.trim() === "") {
       alert("Campo não pode ser vazio");
+
       return;
     }
 
     // Check if the date was already used
     if (hiredArtists.some((hiredArtist) => hiredArtist.data === selectedDate)) {
-      alert("Artista já contratado nesta data");
+      alert("data selecionada");
       return;
     }
 
@@ -38,22 +42,25 @@ function SearchBar() {
 
   return (
     <>
-      <div className="h-screen flex flex-col justify-center items-center ">
-        <h2 className="text-black text-2xl mt-7 mb-1">Spotify API</h2>
+      <NavigationBar />
+      <div className="flex flex-col justify-center items-center ">
+        <h2 className="font-medium font-mono text-white text-3xl mt-7 mb-3">
+          StarSeeker
+        </h2>
         <div className="flex items-center">
-          <input
-            className="border-2 border-gray-300 bg-white h-8 px-5 pr-16 rounded-lg text-sm focus:outline-none"
+          <Input
+            className="border-2 h-8 px-2 pr-16 rounded-lg text-sm text-white focus:outline-none"
             type="text"
             value={artist}
             onChange={(e) => setArtist(e.target.value)}
           />
           <form onSubmit={handleSearch} className="ml-2">
-            <button
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            <Button
+              className="bg-white hover:bg-slate-400 text-black font-bold py-2 px-4 rounded"
               type="submit"
             >
               Buscar
-            </button>
+            </Button>
           </form>
         </div>
         {artists.length === 0 ? (
@@ -65,15 +72,15 @@ function SearchBar() {
             {artists.map((artist, index) => (
               <div
                 key={index}
-                className="bg-white p-4 rounded shadow flex flex-col"
+                className="transition-transform duration-300 hover:translate-y-[-5px] bg-white p-6 rounded shadow flex flex-col"
               >
                 {artist.data.visuals &&
                   artist.data.visuals.avatarImage &&
                   artist.data.visuals.avatarImage.sources[0] && (
                     <img
                       src={artist.data.visuals.avatarImage.sources[0].url}
-                      alt=""
-                      className="w-full h-48 object-cover mb-2 rounded"
+                      alt="artist image"
+                      className="w-full h-48 object-cover mb-2 rounded scale-110 mb-5"
                       loading="lazy"
                       style={{ objectFit: "cover" }}
                     />
@@ -85,7 +92,7 @@ function SearchBar() {
                 )}
                 <Link
                   to="/form"
-                  className="mt-auto inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-center"
+                  className="mt-auto inline-block  bg-neutral-800 hover:bg-neutral-500 text-white font-bold py-2 px-4 rounded text-center"
                   onClick={() => {
                     setHiredArtists([
                       ...hiredArtists,
