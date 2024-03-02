@@ -48,7 +48,7 @@ export const Form = () => {
 
     // Check if the current date is already picked
     if (formDataList.some((item) => item.dataEvento === formData.dataEvento)) {
-      alert("Artista já contratado nesta data");
+      toast.error("Data já escolhida por outro artista");
       return;
     }
 
