@@ -1,6 +1,7 @@
 # Teste Técnico: Estagiário de Desenvolvimento na EnterScience
 
-Este teste técnico foi desenvolvido para a vaga de estágio na EnterScience, uma plataforma que revoluciona a contratação de bandas e artistas, facilitando o acesso a talentos musicais de forma inovadora e eficiente.
+Este teste técnico foi desenvolvido para a vaga de estágio na EnterScience.
+O aplicativo consiste na contratação de bandas e artistas.
 
 ## Como rodar o aplicativo
 Para executar o aplicativo, siga os passos abaixo:
