@@ -24,7 +24,14 @@ npm start
 Após isso acessar esse endereço no navegador [localhost:5173](http://localhost:5173/)
 
 ## Criado com
+
+
+
+
 - Vite
 - React
 - TailwindCSS
 - RapidAPI
+
+# Video mostrando o aplicativo
+![video do aplicativo](https://github.com/kopz9/teste-tecnico/assets/86316953/e41ff34b-6e49-494a-8b37-b7c77a5146e1)
