@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
@@ -12,14 +12,6 @@ function SearchBar() {
   const [selectedDate, setSelectedDate] = useState("");
   const [searchActive, setSearchActive] = useState(false);
 
-  const formDataList = JSON.parse(localStorage.getItem("formDataList")) || [];
-
-  useEffect(() => {
-    const savedHiredArtists =
-      JSON.parse(localStorage.getItem("hiredArtists")) || [];
-    setHiredArtists(savedHiredArtists);
-  }, []);
-
   function handleSearch(e) {
     e.preventDefault();
     if (artist.trim() === "") {
@@ -27,7 +19,6 @@ function SearchBar() {
       return;
     }
 
-    setSearchActive(true);
     setArtist("");
     getArtist(artist);
   }
@@ -41,8 +32,6 @@ function SearchBar() {
       console.log(res.artists.items);
     } catch (error) {
       console.log(error);
-    } finally {
-      setSearchActive(false);
     }
   }
 
@@ -55,6 +44,7 @@ function SearchBar() {
           <h2 className="font-medium font-mono text-white text-3xl mt-7 mb-3">
             StarSeeker
           </h2>
+          <div className="flex items-center">
           <div className="flex flex-col sm:flex-row items-center">
             <Input
               className="w-full sm:w-[400px] p-[20px] rounded border-2 text-white focus:outline-none mb-4 sm:mb-0 sm:mr-2"
@@ -63,88 +53,72 @@ function SearchBar() {
               value={artist}
               onChange={(e) => setArtist(e.target.value)}
             />
-            <Button
-              className="bg-white hover:bg-slate-400 text-black font-bold py-[22px] px-[40px] rounded"
-              type="submit"
-            >
-              Buscar
-            </Button>
+            <form onSubmit={handleSearch} className="ml-2">
+              <Button
+                className="bg-white hover:bg-slate-400 text-black font-bold py-[22px] px-[40px] rounded"
+                type="submit"
+              >
+                Buscar
+              </Button>
+            </form>
+            </div>
           </div>
         </div>
-        {searchActive ? (
+        {artists.length === 0 ? (
           <p className="text-white text-2xl mt-8">
-            Carregando resultados da busca...
+            Digite o nome de um artista ou banda na barra de busca!
           </p>
         ) : (
-          <>
-            {artists.length === 0 ? (
-              <p className="text-white text-2xl mt-8">
-                Digite o nome de um artista ou banda na barra de busca!
-              </p>
-            ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-8">
-                {artists.map((artist, index) => (
-                  <div
-                    key={index}
-                    className="transition-transform duration-300 hover:translate-y-[-5px] bg-zinc-950 p-6 rounded shadow flex flex-col"
-                  >
-                    {artist.data.visuals &&
-                      artist.data.visuals.avatarImage &&
-                      artist.data.visuals.avatarImage.sources[0] && (
-                        <img
-                          src={artist.data.visuals.avatarImage.sources[0].url}
-                          alt="artist image"
-                          className="w-full h-48 object-cover rounded scale-110 mb-5"
-                          loading="lazy"
-                          style={{ objectFit: "cover" }}
-                        />
-                      )}
-                    {artist.data.profile && artist.data.profile.name && (
-                      <h2 className="text-lg font-semibold text-white mb-5">
-                        {artist.data.profile.name}
-                      </h2>
-                    )}
-                    <Link
-                      to="/form"
-                      className="mt-auto inline-block  bg-neutral-800 hover:bg-neutral-500 text-white font-bold py-2 px-4 rounded text-center"
-                      onClick={() => {
-                        setHiredArtists([
-                          ...hiredArtists,
-                          {
-                            hiredArtist: artist.data.profile.name,
-                            date: selectedDate,
-                          },
-                        ]);
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-8">
+            {artists.map((artist, index) => (
+              <div
+                key={index}
+                className="transition-transform duration-300 hover:translate-y-[-5px] bg-zinc-950 p-6 rounded shadow flex flex-col"
+              >
+                {artist.data.visuals &&
+                  artist.data.visuals.avatarImage &&
+                  artist.data.visuals.avatarImage.sources[0] && (
+                    <img
+                      src={artist.data.visuals.avatarImage.sources[0].url}
+                      alt="artist image"
+                      className="w-full h-48 object-cover rounded scale-110 mb-5"
+                      loading="lazy"
+                      style={{ objectFit: "cover" }}
+                    />
+                  )}
+                {artist.data.profile && artist.data.profile.name && (
+                  <h2 className="text-lg font-semibold text-white mb-5">
+                    {artist.data.profile.name}
+                  </h2>
+                )}
+                <Link
+                  to="/form"
+                  className="mt-auto inline-block  bg-neutral-800 hover:bg-neutral-500 text-white font-bold py-2 px-4 rounded text-center"
+                  onClick={() => {
+                    setHiredArtists([
+                      ...hiredArtists,
+                      {
+                        hiredArtist: artist.data.profile.name,
+                        date: selectedDate,
+                      },
+                    ]);
 
-                        const artistAndPhotoUrl = {
-                          ...artist.data.profile,
-                          photoUrl:
-                            artist.data.visuals.avatarImage.sources[0].url,
-                        };
+                    const artistAndPhotoUrl = {
+                      ...artist.data.profile,
+                      photoUrl: artist.data.visuals.avatarImage.sources[0].url,
+                    };
 
-                        localStorage.setItem(
-                          "selectedArtist",
-                          JSON.stringify(artistAndPhotoUrl)
-                        );
-                      }}
-                    >
-                      Contratar
-                    </Link>
-                  </div>
-                ))}
+                    localStorage.setItem(
+                      "selectedArtist",
+                      JSON.stringify(artistAndPhotoUrl)
+                    );
+                  }}
+                >
+                  Contratar
+                </Link>
               </div>
-            )}
-            {hiredArtists.length > 0 && (
-              <div className="mt-8">
-                <h2 className="text-white text-2xl">Artistas contratados:</h2>
-                <ul className="text-white">
-                  {hiredArtists.map((artist, index) => (
-                    <li key={index}>{artist.hiredArtist}</li>
-                  ))}
-                </ul>
-              </div>
-            )}
-          </>
+            ))}
+          </div>
         )}
       </div>
     </>
