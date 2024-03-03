@@ -10,7 +10,6 @@ function SearchBar() {
   const [artists, setArtists] = useState([]);
   const [hiredArtists, setHiredArtists] = useState([]);
   const [selectedDate, setSelectedDate] = useState("");
-  const [searchActive, setSearchActive] = useState(false);
 
   function handleSearch(e) {
     e.preventDefault();
@@ -18,7 +17,6 @@ function SearchBar() {
       toast.error("Campo não pode ser vazio");
       return;
     }
-
     setArtist("");
     getArtist(artist);
   }
